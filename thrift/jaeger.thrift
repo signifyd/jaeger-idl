@@ -25,42 +25,42 @@ enum TagType { STRING, DOUBLE, BOOL, LONG, BINARY }
 
 # Tag is a basic strongly typed key/value pair. It has been flattened to reduce the use of pointers in golang
 struct Tag {
-  1: required string  key
-  2: required TagType vType
-  3: optional string  vStr
-  4: optional double  vDouble
-  5: optional bool    vBool
-  6: optional i64     vLong
-  7: optional binary  vBinary
+  1: required string                    key
+  2: required TagType                   vType
+  3: optional string                    vStr
+  4: optional double                    vDouble
+  5: optional bool                      vBool
+  6: optional i64 (js.type = "Long")    vLong
+  7: optional binary                    vBinary
 }
 
 # Log is a timed even with an arbitrary set of tags.
 struct Log {
-  1: required i64       timestamp
-  2: required list<Tag> fields
+  1: required i64 (js.type = "Long")    timestamp
+  2: required list<Tag>                 fields
 }
 
 enum SpanRefType { CHILD_OF, FOLLOWS_FROM }
 
 # SpanRef describes causal relationship of the current span to another span (e.g. 'child-of')
 struct SpanRef {
-  1: required SpanRefType refType
-  2: required i64         traceIdLow
-  3: required i64         traceIdHigh
-  4: required i64         spanId
+  1: required SpanRefType               refType
+  2: required i64 (js.type = "Long")    traceIdLow
+  3: required i64 (js.type = "Long")    traceIdHigh
+  4: required i64 (js.type = "Long")    spanId
 }
 
 # Span represents a named unit of work performed by a service.
 struct Span {
-  1:  required i64           traceIdLow   # the least significant 64 bits of a traceID
-  2:  required i64           traceIdHigh  # the most significant 64 bits of a traceID; 0 when only 64bit IDs are used
-  3:  required i64           spanId       # unique span id (only unique within a given trace)
-  4:  required i64           parentSpanId # since nearly all spans will have parents spans, CHILD_OF refs do not have to be explicit
-  5:  required string        operationName
-  6:  optional list<SpanRef> references   # causal references to other spans
-  7:  required i32           flags        # tbd
-  8:  required i64           startTime
-  9:  required i64           duration
+  1:  required i64 (js.type = "Long")   traceIdLow   # the least significant 64 bits of a traceID
+  2:  required i64 (js.type = "Long")   traceIdHigh  # the most significant 64 bits of a traceID; 0 when only 64bit IDs are used
+  3:  required i64 (js.type = "Long")   spanId       # unique span id (only unique within a given trace)
+  4:  required i64 (js.type = "Long")   parentSpanId # since nearly all spans will have parents spans, CHILD_OF refs do not have to be explicit
+5:  required string                     operationName
+  6:  optional list<SpanRef>            references   # causal references to other spans
+  7:  required i32                      flags        # tbd
+  8:  required i64 (js.type = "Long")   startTime
+  9:  required i64 (js.type = "Long")   duration
   10: optional list<Tag>     tags
   11: optional list<Log>     logs
 }
