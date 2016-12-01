@@ -63,6 +63,7 @@ struct Span {
   9:  required i64           duration
   10: optional list<Tag>     tags
   11: optional list<Log>     logs
+  12: optional Process       process      # when not in a Batch, points to the Process that generated this span
 }
 
 # Process describes the traced process/service that emits spans.
